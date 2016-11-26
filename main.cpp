@@ -3,6 +3,7 @@
 
 int main(int argc, char *argv[])
 {
+    //work_time_agat
     QApplication a(argc, argv);
     Widget w;
     w.show();
