@@ -10,14 +10,29 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    setWindowTitle(tr("Время Агат"));
+    setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
+                  "stop:0 rgba(90, 90, 90, 150),"
+                  "stop:1 rgba(90, 90, 90, 150));");
+    QPalette paletteMain = ui->lcdNumber_start->palette();
+    paletteMain.setColor(paletteMain.WindowText, QColor(200, 200, 200));
+    paletteMain.setColor(paletteMain.Background, QColor(20, 20, 20, 200));
+    paletteMain.setColor(paletteMain.Light, QColor(220, 220, 220));
+    paletteMain.setColor(paletteMain.Dark, QColor(170, 170, 170));
+    ui->lcdNumber_start->setPalette(paletteMain);
+    ui->lcdNumber_finish->setPalette(paletteMain);
+    QPalette palette = ui->lcdNumber_stat->palette();
+    palette.setColor(palette.WindowText, QColor(130, 130, 130));
+    palette.setColor(palette.Background, QColor(20, 20, 20, 200));
+    palette.setColor(palette.Light, QColor(150, 150, 150));
+    palette.setColor(palette.Dark, QColor(110, 110, 110));
+    ui->lcdNumber_end->setPalette(palette);
+    ui->lcdNumber_stat->setPalette(palette);
     m_pSettings = new Form_settings();
     m_pStatistics = new Form_statistics();
 
     day_work_time = CWorkTime_main::get_work_time_day(QDate::currentDate().day(), QDate::currentDate().month());
 
     this_day = toFile.get_this_day();
-    ui->label_void->hide();
 
     //Начало дня
     if(this_day.start == ""){
@@ -29,7 +44,6 @@ Widget::Widget(QWidget *parent) :
         ui->lcdNumber_finish->hide();
         ui->lcdNumber_end->hide();
         ui->lcdNumber_stat->hide();
-        ui->label_void->show();
 
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(slot_pushbutton_start()));
     }
@@ -103,50 +117,62 @@ void Widget::showInfoDbClick()
 void Widget::setStyleButtons(bool true_start)
 {
     ui->pushButton->setMinimumHeight(300);
+//    this->setStyleSheet(QString::fromUtf8(
+//        "QWidget {"
+//                     "background-color: rgba(10, 10, 10, 250));}"
+//                                      ));
+
+//    QGridLayout layout;
+//    layout.addWidget(ui->pushButton);
+//    setLayout(&layout);
     if(true_start)
+    {
         ui->pushButton->setStyleSheet(QString::fromUtf8(
-            "QPushButton {image: url(/mnt/sdcard/work_time/1.jpg);"
+            "QPushButton {"
                          "font: bold;"
                          "border-style: flat;"
-                         "border-radius: 3px;"
-                         "padding: 6px;"
+                         "border-radius: 20px;"
+                         "padding: 30px;"
                          "background-color: qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
-                                            "stop:0 rgba(20, 255, 20, 0),"
-                                            "stop:1 rgba(20, 255, 20, 70));}"
-            "QPushButton:hover {image: url(/mnt/sdcard/work_time/1.jpg);"
+                                            "stop:0 rgba(100, 100, 100, 10),"
+                                            "stop:1 rgba(10, 10, 10, 250));}"
+            "QPushButton:hover {"
                                "background-color: qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
-                                                                 "stop:0 rgba(0, 255, 0, 180),"
-                                                                 "stop:1 rgba(0, 255, 0, 30));"
+                                                                 "stop:0 rgba(70, 70, 70, 150),"
+                                                                 "stop:1 rgba(10, 10, 10, 250));"
                                "border-style: inset;"
-                               "border-width: 1px;"
+                               "border-width: 3px;"
                                "border-color: grey;}"
-            "QPushButton:pressed {image: url(/mnt/sdcard/work_time/1.jpg);"
+            "QPushButton:pressed {"
                                  "border-style: inset;"
-                                 "border-width: 2px;"
+                                 "border-width: 1px;"
                                  "border-color: grey;}"
             ));
+    }
     else
+    {
         ui->pushButton->setStyleSheet(QString::fromUtf8(
-            "QPushButton {image: url(/mnt/sdcard/work_time/2.jpg);"
+            "QPushButton {"
                          "font: bold;"
                          "border-style: flat;"
-                         "border-radius: 3px;"
-                         "padding: 6px;"
+                         "border-radius: 20px;"
+                         "padding: 30px;"
                          "background-color: qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
-                                            "stop:0 rgba(20, 255, 20, 0),"
-                                            "stop:1 rgba(20, 255, 20, 70));}"
-            "QPushButton:hover {image: url(/mnt/sdcard/work_time/2.jpg);"
+                                            "stop:0 rgba(110, 110, 110, 10),"
+                                            "stop:1 rgba(30, 30, 30, 250));}"
+            "QPushButton:hover {"
                                "background-color: qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
-                                                                 "stop:0 rgba(55, 255, 55, 180),"
-                                                                 "stop:1 rgba(55, 255, 55, 30));"
+                                                                 "stop:0 rgba(70, 70, 70, 150),"
+                                                                 "stop:1 rgba(10, 10, 10, 250));"
                                "border-style: inset;"
-                               "border-width: 1px;"
+                               "border-width: 3px;"
                                "border-color: grey;}"
-            "QPushButton:pressed {image: url(/mnt/sdcard/work_time/2.jpg);"
+            "QPushButton:pressed {"
                                  "border-style: inset;"
-                                 "border-width: 2px;"
+                                 "border-width: 1px;"
                                  "border-color: grey;}"
             ));
+    }
 }
 
 Widget::~Widget()
@@ -162,15 +188,10 @@ void Widget::slot_pushbutton_start()
     ui->lcdNumber_start->display(QTime::currentTime().toString("HH:mm:ss"));
     QString now = QTime::currentTime().toString("HH:mm:ss");
     ui->lcdNumber_end->display(CWorkTime_main::plusTime(&now, &day_work_time));
-    //timer_sec.start(1000);
-    //connect(&timer_sec, SIGNAL(timeout()), this, SLOT(slot_timer_sec()));
     ui->pushButton->hide();
-    //ui->label_start->show();
     ui->lcdNumber_start->show();
     ui->lcdNumber_end->show();
     ui->lcdNumber_stat->hide();
-    //ui->label_stat->show();
-    ui->label_void->hide();
     timer.start(2000);
 }
 

@@ -7,21 +7,11 @@ Form_settings::Form_settings(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->pushButton_save_change, &QPushButton::clicked, this, &Form_settings::slot_rewrite_data);
-}
 
-//bool Form_settings::event(QEvent *event)
-//{
-//    if (event->type() == QEvent::MouseMove){
-//        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-//        newMouseMove(mouseEvent->pos());
-//        return true;
-//    }
-//    if(event->type() == QEvent::MouseButtonDblClick){
-//        QMessageBox::information(this, tr("Справка"), tr("Сверху - применить изменения.\r"
-//                                "Снизу - назад."), QMessageBox::Ok);
-//    }
-//    return QWidget::event(event);
-//}
+    setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
+                  "stop:0 rgba(150, 150, 150, 200),"
+                  "stop:1 rgba(150, 150, 150, 200));");
+}
 
 Form_settings::~Form_settings()
 {

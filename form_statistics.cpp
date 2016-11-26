@@ -26,6 +26,9 @@ Form_statistics::Form_statistics(QWidget *parent) :
     //ui->plot->setBackground(Qt::lightGray);
     ui->plot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle));
     setPlot();
+    setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.517, y1:0, x2:0.511, y2:1,"
+                  "stop:0 rgba(150, 150, 150, 200),"
+                  "stop:1 rgba(150, 150, 150, 200));");
 }
 
 //bool Form_statistics::event(QEvent *event)
@@ -134,6 +137,7 @@ void Form_statistics::setPlot()
         ui->plot->graph(1)->setPen(pen);
         ui->plot->graph(1)->setBrush(QBrush(QColor(10,250,10,20)));
     }
+    ui->plot->setBackground(Qt::gray);
     ui->plot->replot();
 }
 
