@@ -25,14 +25,10 @@ Widget::Widget(QWidget *parent) :
         //ui->pushButton->setIcon(img);
         //ui->pushButton->setIconSize(img.size());
         setStyleButtons(true);
-
-        //ui->label_start->hide();
-        //ui->label_finish->hide();
         ui->lcdNumber_start->hide();
         ui->lcdNumber_finish->hide();
         ui->lcdNumber_end->hide();
         ui->lcdNumber_stat->hide();
-        //ui->label_stat->hide();
         ui->label_void->show();
 
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(slot_pushbutton_start()));
@@ -51,8 +47,6 @@ Widget::Widget(QWidget *parent) :
         QObject::connect(&timer_sec, SIGNAL(timeout()), this, SLOT(slot_timer_sec()));
         ui->lcdNumber_end->show();
         ui->lcdNumber_stat->show();
-        //ui->label_stat->show();
-        //ui->label_finish->hide();
         ui->lcdNumber_finish->hide();
 
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(slot_pushbutton_finish()));
@@ -93,11 +87,6 @@ bool Widget::event(QEvent *event)
 
 void Widget::showInfoDbClick()
 {
-//    QMessageBox::information(this, tr("Справка"), tr("Сверху - виджет изменения времени.\r\n"
-//                            "Снизу - завершить приложение.\r\n"
-//                            "Слева - отчетная таблица за последние 3 месяца.\r\n"
-//                            "Справа - отчетный график за текущую неделю.\r\n"
-//                                                     "На других виджетах жесты не работают."), QMessageBox::Ok);
     QString DeltaTime = QString::number(m_pStatistics->mDeltaTimeOfWeek);
     if(DeltaTime.size() > 4){
         DeltaTime = DeltaTime.mid(0, 4);
