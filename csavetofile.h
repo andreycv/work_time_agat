@@ -9,20 +9,20 @@
 #include <QDate>
 
 //ANDROID
-//static QString FILE_ADDRESS = QString("/mnt/sdcard/work_time/").append("Work Time ").append(QDate::currentDate().toString("MM.yyyy")).append(".txt"); //for android
-//static QString IMAGE1_ADDRESS = QString("/mnt/sdcard/work_time/").append("1").append(".jpg"); //for android
-//static QString IMAGE2_ADDRESS = QString("/mnt/sdcard/work_time/").append("2").append(".jpg"); //for android
-//static QString IMAGE_BACK_ADDRESS = QString("/mnt/sdcard/work_time/").append("3").append(".jpg"); //for android
-//static QString IMAGE_SETTINGS_ADDRESS = QString("/mnt/sdcard/work_time/").append("4").append(".jpg"); //for android
-//static QString IMAGE_STAT_ADDRESS = QString("/mnt/sdcard/work_time/").append("5").append(".jpg"); //for android
+static QString FILE_ADDRESS = QString("/mnt/sdcard/work_time/").append("Work Time ").append(QDate::currentDate().toString("MM.yyyy")).append(".txt"); //for android
+static QString IMAGE1_ADDRESS = QString("/mnt/sdcard/work_time/").append("1").append(".jpg"); //for android
+static QString IMAGE2_ADDRESS = QString("/mnt/sdcard/work_time/").append("2").append(".jpg"); //for android
+static QString IMAGE_BACK_ADDRESS = QString("/mnt/sdcard/work_time/").append("3").append(".jpg"); //for android
+static QString IMAGE_SETTINGS_ADDRESS = QString("/mnt/sdcard/work_time/").append("4").append(".jpg"); //for android
+static QString IMAGE_STAT_ADDRESS = QString("/mnt/sdcard/work_time/").append("5").append(".jpg"); //for android
 
 //WINDOWS
-static const QString FILE_ADDRESS = QString("Work Time ").append(QDate::currentDate().toString("MM.yyyy")).append(".txt"); //for PC
-static const QString IMAGE1_ADDRESS = QString("1").append(".jpg"); //for PC
-static const QString IMAGE2_ADDRESS = QString("2").append(".jpg"); //for PC
-static QString IMAGE_BACK_ADDRESS = QString("3").append(".jpg"); //for PC
-static QString IMAGE_SETTINGS_ADDRESS = QString("4").append(".jpg"); //for PC
-static QString IMAGE_STAT_ADDRESS = QString("5").append(".jpg"); //for PC
+//static const QString FILE_ADDRESS = QString("Work Time ").append(QDate::currentDate().toString("MM.yyyy")).append(".txt"); //for PC
+//static const QString IMAGE1_ADDRESS = QString("1").append(".jpg"); //for PC
+//static const QString IMAGE2_ADDRESS = QString("2").append(".jpg"); //for PC
+//static QString IMAGE_BACK_ADDRESS = QString("3").append(".jpg"); //for PC
+//static QString IMAGE_SETTINGS_ADDRESS = QString("4").append(".jpg"); //for PC
+//static QString IMAGE_STAT_ADDRESS = QString("5").append(".jpg"); //for PC
 
 enum status_file{
     CANT_MAKE_FILE,

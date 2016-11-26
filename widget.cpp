@@ -29,6 +29,8 @@ Widget::Widget(QWidget *parent) :
     ui->lcdNumber_stat->setPalette(palette);
     m_pSettings = new Form_settings();
     m_pStatistics = new Form_statistics();
+    m_speech = new QTextToSpeech(this);
+    m_speech->setPitch(-0.1);
 
     day_work_time = CWorkTime_main::get_work_time_day(QDate::currentDate().day(), QDate::currentDate().month());
 
@@ -83,7 +85,6 @@ Widget::Widget(QWidget *parent) :
     ui->lcdNumber_end->setPalette(pal);
 
     connect(&m_timerMouseMove, &QTimer::timeout, this, &Widget::onTimerMouseMove);
-    this->setFocus();
 }
 
 bool Widget::event(QEvent *event)
@@ -102,13 +103,70 @@ bool Widget::event(QEvent *event)
 void Widget::showInfoDbClick()
 {
     QString DeltaTime = QString::number(m_pStatistics->mDeltaTimeOfWeek);
-    if(DeltaTime.size() > 4){
+    if(DeltaTime.at(0) == '-' && DeltaTime.size() > 4)
+        DeltaTime = DeltaTime.mid(0, 5);
+    else
         DeltaTime = DeltaTime.mid(0, 4);
-    }
     if(m_pStatistics->mDeltaTimeOfWeek < 0)
         DeltaTime = QString("\nнедоработка ").append(DeltaTime).append(" часов").append(".\nНе унывай,\nвсе получится!");
     else
         DeltaTime = QString("\nпереработка +").append(DeltaTime).append(" часов").append(".\nОтличного дня,\nты молодец!");
+
+
+
+
+    int randI = QTime::currentTime().second() % 3;
+    m_speech->setRate(0);
+    if(randI == 2){
+        m_speech->setPitch(0.4);
+        m_speech->say(CWorkTime_main::getJoke());
+    }
+    else
+    {
+        m_speech->setPitch(-0.1);
+        int delta = static_cast<int>(m_pStatistics->mDeltaTimeOfWeek * 100);
+        bool isMines = false;
+        if(delta < 0){
+            isMines = true;
+            delta *= -1;
+        }
+        QString say = QString(tr("Сегодня ")).append(CWorkTime_main::getDayOfWeekFull());
+        if(isMines){
+            say.append(", недоработка ");
+        }
+        else say.append(", переработка ");
+        int deltaMin = (delta % 100) * 60 / 100;
+        delta = delta / 100;
+        switch(delta){
+        case 0: break;
+        case 1: say.append(QString::number(delta)).append(" час ");
+            break;
+        case 2: say.append(QString::number(delta)).append(" часа ");
+            break;
+        case 3: say.append(QString::number(delta)).append(" часа ");
+            break;
+        case 4: say.append(QString::number(delta)).append(" часа ");
+            break;
+        default: say.append(QString::number(delta)).append(" часов ");
+            break;
+        }
+        switch(deltaMin){
+        case 0: if(delta != 0) {say.append("0 минут ");}
+            else {say = QString(tr("Сегодня ")).append(CWorkTime_main::getDayOfWeekFull());}
+            break;
+        case 1: say.append(QString::number(deltaMin)).append(" минута ");
+            break;
+        case 2: say.append(QString::number(deltaMin)).append(" минуты ");
+            break;
+        case 3: say.append(QString::number(deltaMin)).append(" минуты ");
+            break;
+        case 4: say.append(QString::number(deltaMin)).append(" минуты ");
+            break;
+        default: say.append(QString::number(deltaMin)).append(" минут ");
+            break;
+        }
+        m_speech->say(say.append(", хорошего дня"));
+    }
     QMessageBox::information(this, tr("Инфо"),
                              QString("На ").append(QDate::currentDate().toString("dd.MM")).append(DeltaTime),
                              QMessageBox::Ok);
@@ -192,7 +250,14 @@ void Widget::slot_pushbutton_start()
     ui->lcdNumber_start->show();
     ui->lcdNumber_end->show();
     ui->lcdNumber_stat->hide();
-    timer.start(2000);
+    timer.start(3000);
+
+    m_speech->setPitch(0.1);
+    m_speech->setRate(0.1);
+    if(QTime::currentTime().hour() > 9)
+        m_speech->say("Ты сегодня позднее, но это не беда, ты всеравно молодец");
+    else
+        m_speech->say("ok, я отметила начало дня");
 }
 
 void Widget::slot_pushbutton_finish()
@@ -225,7 +290,10 @@ void Widget::slot_pushbutton_finish()
     ui->lcdNumber_end->display(worked_time);
     ui->lcdNumber_stat->display(CWorkTime_main::minusTime(&worked_time, &day_work_time));
     disconnect(&timer_sec, SIGNAL(timeout()), this, SLOT(slot_timer_sec()));
-    timer.start(2000);
+    timer.start(3000);
+    m_speech->setPitch(0.1);
+    m_speech->setRate(0.1);
+    m_speech->say("я отметила окончание дня, ты молодец, пока.");
 }
 
 void Widget::slot_timer_exit()

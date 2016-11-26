@@ -21,6 +21,8 @@ public:
     static QString get_work_time_day(int day, int month);
     static int get_work_time_day_to_min(int day_of_week);
     static QString getDayOfWeek(QString data);
+    static QString getDayOfWeekFull(QString data = QDate::currentDate().toString("dd.MM"));
+    static QString getJoke();
 
 signals:
 

@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QTimer>
 #include <QMessageBox>
+#include <QTextToSpeech>
 
 namespace Ui {
 class Widget;
@@ -44,6 +45,8 @@ private:
     Form_statistics *m_pStatistics;
     QVector<QPoint> m_vectorMouseMove;
     QTimer m_timerMouseMove;
+    QTextToSpeech *m_speech;
+
 
     void newMouseMove(QPoint newPoint);
     bool event(QEvent *event);

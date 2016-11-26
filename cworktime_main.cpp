@@ -95,5 +95,49 @@ QString CWorkTime_main::getDayOfWeek(QString data)
     }
 }
 
+QString CWorkTime_main::getDayOfWeekFull(QString data)
+{
+    QDate date = QDate::fromString(data.append(".").append(QString::number(QDate::currentDate().year())), "dd.MM.yyyy");
+    if(QDate::currentDate().month() < date.month())
+        date.addYears(-1);
+    switch(date.dayOfWeek()){
+    case 1: return QObject::tr("понедельник");
+        break;
+    case 2: return QObject::tr("вторник");
+        break;
+    case 3: return QObject::tr("среда");
+        break;
+    case 4: return QObject::tr("четверг");
+        break;
+    case 5: return QObject::tr("пятница");
+        break;
+    case 6: return QObject::tr("суббота");
+        break;
+    case 7: return QObject::tr("воскресенье");
+        break;
+    }
+}
+
+QString CWorkTime_main::getJoke()
+{
+    switch(QTime::currentTime().second() % 16){
+    case 0: return "В интернете появился корейский вирус. Он попадает к вам в почту и съедает собаку.";
+    case 1: return "На Хеллоуин оденусь в костюм реальности и буду пугать всех ипотекой и кредитами.";
+    case 2: return "Напиши ясно, покажи, как ты обиделась.";
+    case 3: return "На словах ты 4G, а на деле просто Е.";
+    case 4: return "Уважаемый Дедушка Мороз — это письмо не спам, а реальная возможность заработать…";
+    case 5: return "Руководство по убийству пользователей. Библия системного администратора.";
+    case 6: return "Начни потихонечку начинать!";
+    case 7: return "Дареному провайдеру в канал не смотрят.";
+    case 8: return "А ведь в 19-м веке словосочетание ,получить ссылку, имело совсем другое значение";
+    case 9: return "Всяческих вам баг!";
+    case 10: return "Пропала собака! Особые приметы: Shift+2";
+    case 12: return "От винта, кричал Касперский, отбиваясь от вирусов.";
+    case 13: return "В нынешнее время государство должно иметь не символику и не герб, а аватар!";
+    case 14: return "Скажите, какова ваша методика написания диплома? Ctrl+С, Ctrl+V!";
+    case 15: return "Ушел в заГугл…";
+    }
+}
+
 
 
